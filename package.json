@@ -7,9 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
-  "start": "node src/app.js",
-  "dev": "nodemon src/app.js"
-},
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/muhammadghautsillah-glitch/shoestock-app.git"
@@ -38,5 +38,8 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
+  },
+  "allowScripts": {
+    "bcrypt@6.0.0": true
   }
 }
