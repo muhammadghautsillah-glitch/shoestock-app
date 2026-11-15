@@ -9,3 +9,9 @@ Aturan: tidak memasukkan password, API key, DATABASE_URL, atau data pribadi ke p
 - **Bagian yang dibantu:** perencanaan proyek, persiapan lingkungan (VS Code, Node.js, Git), pembuatan akun GitHub/Neon/Render, setup repository dan .gitignore
 - **Prompt utama:** "Buatkan project aplikasi stok sepatu step by step sesuai ketentuan tugas Cyber Security. Apa yang harus dimulai dulu, pakai VS Code dan database apa?"
 - **Cara saya meninjau/memverifikasi:** menjalankan setiap perintah sendiri di terminal VS Code, memeriksa hasilnya di GitHub (commit dan struktur folder), dan memperbaiki kesalahan lokasi terminal (sempat di System32, lalu dipindah ke folder proyek)
+## Entri 2 - 15/11/2026
+
+- **Alat AI:** Claude (chat)
+- **Bagian yang dibantu:** inisialisasi proyek Node.js/Express, struktur folder, konfigurasi .env dan .env.example, halaman tes
+- **Prompt utama:** "Bantu langkah Tahap 1: fondasi proyek, step by step satu per satu"
+- **Cara saya meninjau/memverifikasi:** memeriksa `git status` dan `git check-ignore` agar `.env` tidak ter-commit, memperbaiki salah ketik nama file (`index,ejs` menjadi `index.ejs`), memperbaiki folder yang terbuat sebagai file, dan menjalankan `npm run dev` untuk memastikan halaman tampil
