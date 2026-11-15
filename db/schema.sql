@@ -1,0 +1,41 @@
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(10) NOT NULL DEFAULT 'staff' CHECK (role IN ('admin', 'staff')),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS products (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  brand VARCHAR(50) NOT NULL,
+  category VARCHAR(50) NOT NULL,
+  size VARCHAR(10) NOT NULL,
+  color VARCHAR(30) NOT NULL,
+  price NUMERIC(12, 2) NOT NULL CHECK (price >= 0),
+  stock INTEGER NOT NULL DEFAULT 0 CHECK (stock >= 0),
+  created_by INTEGER REFERENCES users(id) ON DELETE SET NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS stock_movements (
+  id SERIAL PRIMARY KEY,
+  product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+  type VARCHAR(3) NOT NULL CHECK (type IN ('in', 'out')),
+  quantity INTEGER NOT NULL CHECK (quantity > 0),
+  note VARCHAR(255),
+  user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS activity_logs (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+  action VARCHAR(50) NOT NULL,
+  detail VARCHAR(255),
+  ip_address VARCHAR(45),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
