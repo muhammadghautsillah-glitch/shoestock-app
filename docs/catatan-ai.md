@@ -15,3 +15,4 @@ Aturan: tidak memasukkan password, API key, DATABASE_URL, atau data pribadi ke p
 - **Bagian yang dibantu:** inisialisasi proyek Node.js/Express, struktur folder, konfigurasi .env dan .env.example, halaman tes
 - **Prompt utama:** "Bantu langkah Tahap 1: fondasi proyek, step by step satu per satu"
 - **Cara saya meninjau/memverifikasi:** memeriksa `git status` dan `git check-ignore` agar `.env` tidak ter-commit, memperbaiki salah ketik nama file (`index,ejs` menjadi `index.ejs`), memperbaiki folder yang terbuat sebagai file, dan menjalankan `npm run dev` untuk memastikan halaman tampil
+(registrasi, login, sesi, bcrypt, skrip admin) dan apa yang Anda verifikasi sendiri (hash $2b$12$ di database, halaman /dashboard dialihkan setelah logout).

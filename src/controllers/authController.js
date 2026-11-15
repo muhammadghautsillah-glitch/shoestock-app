@@ -45,6 +45,7 @@ exports.showLogin = (req, res) => {
 
 exports.login = async (req, res) => {
   const { username, password } = req.body;
+  console.log('DEBUG login:', { username, panjangPassword: String(password || '').length });
   const pesanGagal = 'Username atau password salah.';
 
   try {
