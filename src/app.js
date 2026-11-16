@@ -24,7 +24,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(helmet());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
-
+// Cegah browser menyimpan halaman (supaya token CSRF selalu segar)
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store');
+  next();
+});
 app.use(
   session({
     store: new pgSession({ pool, tableName: 'session' }),
