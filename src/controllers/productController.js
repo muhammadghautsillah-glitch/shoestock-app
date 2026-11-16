@@ -93,3 +93,16 @@ exports.update = async (req, res) => {
     res.status(500).send('Terjadi kesalahan pada server.');
   }
 };
+exports.remove = async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  if (!Number.isInteger(id)) return res.status(404).send('Data tidak ditemukan.');
+
+  try {
+    const hasil = await pool.query('DELETE FROM products WHERE id = $1', [id]);
+    if (hasil.rowCount === 0) return res.status(404).send('Data tidak ditemukan.');
+    res.redirect('/products');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Terjadi kesalahan pada server.');
+  }
+};

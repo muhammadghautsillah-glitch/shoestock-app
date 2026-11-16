@@ -27,7 +27,15 @@
           <td><%= p.color %></td>
           <td><%= p.price %></td>
           <td><%= p.stock %></td>
-           <td><a href="/products/<%= p.id %>/edit">Ubah</a></td>
+      <td>
+  <a href="/products/<%= p.id %>/edit">Ubah</a>
+  <% if (user.role === 'admin') { %>
+    <form method="POST" action="/products/<%= p.id %>/delete" style="display:inline"
+          onsubmit="return confirm('Hapus sepatu ini?')">
+      <button type="submit">Hapus</button>
+    </form>
+  <% } %>
+</td>
         </tr>
       <% }); %>
     </table>
