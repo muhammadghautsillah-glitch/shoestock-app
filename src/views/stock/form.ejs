@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <p><a href="/dashboard">&larr; Dashboard</a></p>
+  <h1>Stok Masuk/Keluar</h1>
+
+  <% if (success) { %>
+    <p style="color:green">Stok berhasil diperbarui.</p>
+  <% } %>
+
+  <% if (errors.length > 0) { %>
+    <ul class="error">
+      <% errors.forEach(function(e) { %><li><%= e %></li><% }); %>
+    </ul>
+  <% } %>
+
+  <form method="POST" action="/stock">
+    <label>Sepatu</label><br>
+    <select name="product_id" required>
+      <% products.forEach(function(p) { %>
+        <option value="<%= p.id %>">
+          <%= p.name %> - ukuran <%= p.size %> - <%= p.color %> (stok: <%= p.stock %>)
+        </option>
+      <% }); %>
+    </select><br><br>
+
+    <label>Jenis</label><br>
+    <select name="type" required>
+      <option value="in">Barang masuk</option>
+      <option value="out">Barang keluar</option>
+    </select><br><br>
+
+    <label>Jumlah</label><br>
+    <input type="number" name="quantity" min="1" required><br><br>
+
+    <label>Catatan (opsional)</label><br>
+    <input type="text" name="note" maxlength="255"><br><br>
+
+    <button type="submit">Simpan</button>
+  </form>
+</body>
+</html>

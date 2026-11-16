@@ -28,4 +28,10 @@ const productRules = [
   body('price').isFloat({ min: 0, max: 999999999 }).withMessage('Harga harus angka 0 atau lebih.'),
   body('stock').isInt({ min: 0, max: 100000 }).withMessage('Stok harus bilangan bulat 0 atau lebih.'),
 ];
-module.exports = { registerRules, productRules};
+const stockRules = [
+  body('product_id').isInt({ min: 1 }).withMessage('Produk tidak valid.'),
+  body('type').isIn(['in', 'out']).withMessage('Jenis harus masuk atau keluar.'),
+  body('quantity').isInt({ min: 1, max: 100000 }).withMessage('Jumlah harus bilangan bulat minimal 1.'),
+  body('note').optional({ checkFalsy: true }).trim().isLength({ max: 255 }).withMessage('Catatan maksimal 255 karakter.'),
+];
+module.exports = { registerRules, productRules, stockRules };
