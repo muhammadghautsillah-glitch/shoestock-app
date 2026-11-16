@@ -7,5 +7,6 @@ const { productRules } = require('../middleware/validators');
 router.get('/products', requireLogin, productController.list);
 router.get('/products/new', requireLogin, productController.showCreate);
 router.post('/products', requireLogin, productRules, productController.create);
-
+router.get('/products/:id/edit', requireLogin, productController.showEdit);
+router.post('/products/:id/edit', requireLogin, productRules, productController.update);
 module.exports = router;
