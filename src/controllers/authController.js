@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 const pool = require('../config/db');
+const { logActivity } = require('../utils/logger');
 
 exports.showRegister = (req, res) => {
   res.render('register', { title: 'Registrasi', errors: [], old: {} });
@@ -26,6 +27,7 @@ exports.register = async (req, res) => {
       'INSERT INTO users (username, email, password_hash, role) VALUES ($1, $2, $3, $4)',
       [username, email, hash, 'staff']
     );
+    logActivity(req, 'REGISTRASI', 'Akun baru terdaftar: ' + username);
     res.redirect('/login');
   } catch (err) {
     if (err.code === '23505') {
@@ -39,6 +41,7 @@ exports.register = async (req, res) => {
     res.status(500).send('Terjadi kesalahan pada server.');
   }
 };
+
 exports.showLogin = (req, res) => {
   res.render('login', { title: 'Login', error: null });
 };
@@ -56,6 +59,12 @@ exports.login = async (req, res) => {
 
     // Pesan sama untuk username salah / password salah (tidak membocorkan info akun)
     if (!user || !(await bcrypt.compare(String(password || ''), user.password_hash))) {
+      await logActivity(
+        req,
+        'LOGIN_GAGAL',
+        'Percobaan login gagal untuk username: ' + String(username || '').slice(0, 50),
+        user ? user.id : null
+      );
       return res.status(401).render('login', { title: 'Login', error: pesanGagal });
     }
 
@@ -66,6 +75,7 @@ exports.login = async (req, res) => {
         return res.status(500).send('Terjadi kesalahan pada server.');
       }
       req.session.user = { id: user.id, username: user.username, role: user.role };
+      logActivity(req, 'LOGIN', 'Login berhasil: ' + user.username);
       res.redirect('/dashboard');
     });
   } catch (err) {
@@ -75,6 +85,7 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
+  logActivity(req, 'LOGOUT', 'Logout: ' + (req.session.user ? req.session.user.username : '-'));
   req.session.destroy(() => {
     res.clearCookie('shoestock.sid');
     res.redirect('/login');

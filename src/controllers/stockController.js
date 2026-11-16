@@ -1,5 +1,6 @@
 const pool = require('../config/db');
 const { validationResult } = require('express-validator');
+const { logActivity } = require('../utils/logger');
 
 exports.showForm = async (req, res) => {
   try {
@@ -17,9 +18,15 @@ exports.showForm = async (req, res) => {
 };
 
 exports.move = async (req, res) => {
-  const result = validationResult(req);
-  const produk = await pool.query('SELECT id, name, size, color, stock FROM products ORDER BY name');
+  let produk;
+  try {
+    produk = await pool.query('SELECT id, name, size, color, stock FROM products ORDER BY name');
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send('Terjadi kesalahan pada server.');
+  }
 
+  const result = validationResult(req);
   if (!result.isEmpty()) {
     return res.status(400).render('stock/form', {
       title: 'Stok Masuk/Keluar',
@@ -62,6 +69,11 @@ exports.move = async (req, res) => {
     );
 
     await client.query('COMMIT');
+    logActivity(
+      req,
+      type === 'in' ? 'STOK_MASUK' : 'STOK_KELUAR',
+      'Produk id ' + productId + ', jumlah ' + qty
+    );
     res.redirect('/stock?ok=1');
   } catch (err) {
     await client.query('ROLLBACK');

@@ -1,5 +1,6 @@
 const pool = require('../config/db');
 const { validationResult } = require('express-validator');
+const { logActivity } = require('../utils/logger');
 exports.list = async (req, res) => {
   try {
     const hasil = await pool.query(
@@ -38,6 +39,7 @@ exports.create = async (req, res) => {
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
       [name, brand, category, size, color, price, stock, req.session.user.id]
     );
+    logActivity(req, 'PRODUK_TAMBAH', 'Tambah sepatu: ' + name);
     res.redirect('/products');
   } catch (err) {
     console.error(err);
@@ -87,6 +89,7 @@ exports.update = async (req, res) => {
       [name, brand, category, size, color, price, stock, id]
     );
     if (hasil.rowCount === 0) return res.status(404).send('Data tidak ditemukan.');
+    logActivity(req, 'PRODUK_UBAH', 'Ubah sepatu id: ' + id);
     res.redirect('/products');
   } catch (err) {
     console.error(err);
@@ -100,6 +103,7 @@ exports.remove = async (req, res) => {
   try {
     const hasil = await pool.query('DELETE FROM products WHERE id = $1', [id]);
     if (hasil.rowCount === 0) return res.status(404).send('Data tidak ditemukan.');
+    logActivity(req, 'PRODUK_HAPUS', 'Hapus sepatu id: ' + id);
     res.redirect('/products');
   } catch (err) {
     console.error(err);
