@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <p><a href="/dashboard">&larr; Dashboard</a></p>
+  <h1>Laporan Stok</h1>
+
+  <table border="1" cellpadding="8" cellspacing="0">
+    <tr>
+      <th>Jumlah jenis sepatu</th>
+      <th>Total stok</th>
+      <th>Stok menipis (&le; <%= batas %>)</th>
+    </tr>
+    <tr>
+      <td><%= ringkasan.jumlah_produk %></td>
+      <td><%= ringkasan.total_stok %></td>
+      <td><%= ringkasan.stok_menipis %></td>
+    </tr>
+  </table>
+<p><a href="/reports/export.csv">Unduh data sepatu (CSV)</a></p>
+  <h2>Riwayat Stok Terakhir</h2>
+  <% if (riwayat.length === 0) { %>
+    <p>Belum ada riwayat stok.</p>
+  <% } else { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <tr>
+        <th>Waktu</th><th>Sepatu</th><th>Ukuran</th><th>Jenis</th>
+        <th>Jumlah</th><th>Catatan</th><th>Oleh</th>
+      </tr>
+      <% riwayat.forEach(function(r) { %>
+        <tr>
+          <td><%= new Date(r.created_at).toLocaleString('id-ID') %></td>
+          <td><%= r.name %></td>
+          <td><%= r.size %></td>
+          <td><%= r.type === 'in' ? 'Masuk' : 'Keluar' %></td>
+          <td><%= r.quantity %></td>
+          <td><%= r.note || '-' %></td>
+          <td><%= r.username || '-' %></td>
+        </tr>
+      <% }); %>
+    </table>
+  <% } %>
+</body>
+</html>

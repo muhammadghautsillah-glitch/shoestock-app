@@ -40,9 +40,10 @@ app.use(
 app.use('/', require('./routes/authRoutes'));
 app.use('/', require('./routes/productRoutes'));
 app.use('/', require('./routes/stockRoutes'));
+app.use('/', require('./routes/reportRoutes'));
 const { requireLogin } = require('./middleware/auth');
 app.get('/dashboard', requireLogin, (req, res) => {
-  res.render('dashboard', { title: 'Dashboard', user: req.session.user });
+  res.render('dashbozard', { title: 'Dashboard', user: req.session.user });
 });
 app.get('/', (req, res) => {
   res.render('index', { title: 'ShoeStock' });
