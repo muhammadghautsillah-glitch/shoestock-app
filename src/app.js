@@ -19,6 +19,7 @@ if (!process.env.SESSION_SECRET) {
 app.set('trust proxy', 1);
 
 app.set('view engine', 'ejs');
+app.engine('ejs', require('ejs').__express);
 app.set('views', path.join(__dirname, 'views'));
 app.use(helmet());
 app.use(express.urlencoded({ extended: false }));
@@ -66,12 +67,19 @@ app.get('/', (req, res) => {
   res.render('index', { title: 'ShoeStock' });
 });
 
-app.listen(PORT, () => {
-  app.use((err, req, res, next) => {
+// Penanganan error CSRF
+app.use((err, req, res, next) => {
   if (err && err.code === 'EBADCSRFTOKEN') {
     return res.status(403).send('Token CSRF tidak valid. Muat ulang halaman dan coba lagi.');
   }
   next(err);
 });
-  console.log(`Server berjalan di http://localhost:${PORT}`);
-});
+
+// Jalankan server hanya di lokal. Di Vercel, app diekspor di bawah.
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server berjalan di http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
