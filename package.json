@@ -10,6 +10,9 @@
     "start": "node src/app.js",
     "dev": "nodemon src/app.js"
   },
+  "engines": {
+  "node": ">=v26.13.1"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/muhammadghautsillah-glitch/shoestock-app.git"
