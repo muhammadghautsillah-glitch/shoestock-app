@@ -4,7 +4,7 @@ const path = require('path');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const pool = require('./config/db');
-
+const helmet = require('helmet');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const isProduction = process.env.NODE_ENV === 'production';
@@ -18,7 +18,7 @@ app.set('trust proxy', 1);
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
+app.use(helmet());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
