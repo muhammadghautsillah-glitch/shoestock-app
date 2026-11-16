@@ -32,6 +32,7 @@
   <% if (user.role === 'admin') { %>
     <form method="POST" action="/products/<%= p.id %>/delete" style="display:inline"
           onsubmit="return confirm('Hapus sepatu ini?')">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <button type="submit">Hapus</button>
     </form>
   <% } %>

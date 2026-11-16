@@ -5,6 +5,8 @@ const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const pool = require('./config/db');
 const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
+const { doubleCsrfProtection, generateCsrfToken } = require('./middleware/csrf');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const isProduction = process.env.NODE_ENV === 'production';
@@ -37,6 +39,21 @@ app.use(
     },
   })
 );
+app.use(cookieParser());
+
+// Pastikan sesi tersimpan, supaya token CSRF terikat ke sesi yang stabil
+app.use((req, res, next) => {
+  req.session.csrfInit = true;
+  next();
+});
+
+app.use(doubleCsrfProtection);
+
+// Sediakan token ke semua tampilan
+app.use((req, res, next) => {
+  res.locals.csrfToken = generateCsrfToken(req, res);
+  next();
+});
 app.use('/', require('./routes/authRoutes'));
 app.use('/', require('./routes/productRoutes'));
 app.use('/', require('./routes/stockRoutes'));
@@ -50,5 +67,11 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
+  app.use((err, req, res, next) => {
+  if (err && err.code === 'EBADCSRFTOKEN') {
+    return res.status(403).send('Token CSRF tidak valid. Muat ulang halaman dan coba lagi.');
+  }
+  next(err);
+});
   console.log(`Server berjalan di http://localhost:${PORT}`);
 });

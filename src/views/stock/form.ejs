@@ -21,6 +21,7 @@
   <% } %>
 
   <form method="POST" action="/stock">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <label>Sepatu</label><br>
     <select name="product_id" required>
       <% products.forEach(function(p) { %>
