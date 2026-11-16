@@ -19,5 +19,13 @@ const registerRules = [
     .custom((value, { req }) => value === req.body.password)
     .withMessage('Konfirmasi password tidak sama.'),
 ];
-
-module.exports = { registerRules };
+const productRules = [
+  body('name').trim().isLength({ min: 2, max: 100 }).withMessage('Nama 2-100 karakter.'),
+  body('brand').trim().isLength({ min: 2, max: 50 }).withMessage('Merek 2-50 karakter.'),
+  body('category').trim().isLength({ min: 2, max: 50 }).withMessage('Kategori 2-50 karakter.'),
+  body('size').trim().isLength({ min: 1, max: 10 }).withMessage('Ukuran 1-10 karakter.'),
+  body('color').trim().isLength({ min: 2, max: 30 }).withMessage('Warna 2-30 karakter.'),
+  body('price').isFloat({ min: 0, max: 999999999 }).withMessage('Harga harus angka 0 atau lebih.'),
+  body('stock').isInt({ min: 0, max: 100000 }).withMessage('Stok harus bilangan bulat 0 atau lebih.'),
+];
+module.exports = { registerRules, productRules};
