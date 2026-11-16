@@ -38,7 +38,7 @@ app.use(
   })
 );
 app.use('/', require('./routes/authRoutes'));
-
+app.use('/', require('./routes/productRoutes'));
 const { requireLogin } = require('./middleware/auth');
 app.get('/dashboard', requireLogin, (req, res) => {
   res.render('dashboard', { title: 'Dashboard', user: req.session.user });

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <p><a href="/dashboard">&larr; Dashboard</a></p>
+  <h1>Data Sepatu</h1>
+
+  <% if (products.length === 0) { %>
+    <p>Belum ada data sepatu.</p>
+  <% } else { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <tr>
+        <th>Nama</th><th>Merek</th><th>Kategori</th><th>Ukuran</th>
+        <th>Warna</th><th>Harga</th><th>Stok</th>
+      </tr>
+      <% products.forEach(function(p) { %>
+        <tr>
+          <td><%= p.name %></td>
+          <td><%= p.brand %></td>
+          <td><%= p.category %></td>
+          <td><%= p.size %></td>
+          <td><%= p.color %></td>
+          <td><%= p.price %></td>
+          <td><%= p.stock %></td>
+        </tr>
+      <% }); %>
+    </table>
+  <% } %>
+</body>
+</html>
