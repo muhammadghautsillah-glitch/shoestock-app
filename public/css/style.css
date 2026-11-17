@@ -88,4 +88,8 @@ ul:not(.error) li a:hover { border-color: var(--warna-utama); text-decoration: n
 /* Tabel lebar di layar kecil */
 @media (max-width: 700px) {
   table { display: block; overflow-x: auto; }
+  .hint {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
 }

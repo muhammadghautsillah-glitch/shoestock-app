@@ -17,23 +17,32 @@
     </ul>
   <% } %>
 
-  <form method="POST" action="/register">
+    <form method="POST" action="/register">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <label>Username</label><br>
-    <input type="text" name="username" value="<%= old.username || '' %>" required><br><br>
 
-    <label>Email</label><br>
-    <input type="email" name="email" value="<%= old.email || '' %>" required><br><br>
+    <label for="username">Username</label><br>
+    <input type="text" id="username" name="username" value="<%= old.username || '' %>"
+           minlength="3" maxlength="30" pattern="[a-zA-Z0-9_]+" autocomplete="username" required><br>
+    <small class="hint">3-30 karakter, hanya huruf, angka, dan underscore (_).</small><br><br>
 
-    <label>Password</label><br>
-    <input type="password" name="password" required><br><br>
+    <label for="email">Email</label><br>
+    <input type="email" id="email" name="email" value="<%= old.email || '' %>"
+           autocomplete="email" required><br>
+    <small class="hint">Contoh: nama@gmail.com. Tidak ada email verifikasi.</small><br><br>
 
-    <label>Konfirmasi Password</label><br>
-    <input type="password" name="confirmPassword" required><br><br>
+    <label for="password">Password</label><br>
+    <input type="password" id="password" name="password"
+           minlength="10" maxlength="72" autocomplete="new-password" required><br>
+    <small class="hint">10-72 karakter, wajib ada huruf besar, huruf kecil, angka, dan simbol (misalnya _ atau !).</small><br><br>
+
+    <label for="confirmPassword">Konfirmasi Password</label><br>
+    <input type="password" id="confirmPassword" name="confirmPassword"
+           autocomplete="new-password" required><br>
+    <small class="hint">Ketik ulang password yang sama.</small><br><br>
 
     <button type="submit">Daftar</button>
   </form>
-
+  
   <p>Sudah punya akun? <a href="/login">Login</a></p>
 </body>
 </html>
