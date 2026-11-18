@@ -1,45 +1,52 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-  <p><a href="/dashboard">&larr; Dashboard</a></p>
-  <h1>Data Sepatu</h1>
-<p><a href="/products/new">+ Tambah Sepatu</a></p>
+<%- include('../partials/start', { active: 'products' }) %>
+
+<div class="bar-atas">
+  <div class="judul-halaman">
+    <h1>Data Sepatu</h1>
+    <p class="sub">Kelola data sepatu, harga, dan stok.</p>
+  </div>
+  <a href="/products/new" class="btn">+ Tambah Sepatu</a>
+</div>
+
+<div class="tabel-bungkus">
   <% if (products.length === 0) { %>
-    <p>Belum ada data sepatu.</p>
+    <p class="kosong">Belum ada data sepatu.</p>
   <% } else { %>
-    <table border="1" cellpadding="6" cellspacing="0">
-      <tr>
-        <th>Nama</th><th>Merek</th><th>Kategori</th><th>Ukuran</th>
-        <th>Warna</th><th>Harga</th><th>Stok</th>
-      </tr>
-      <% products.forEach(function(p) { %>
+    <table class="tabel">
+      <thead>
         <tr>
-          <td><%= p.name %></td>
-          <td><%= p.brand %></td>
-          <td><%= p.category %></td>
-          <td><%= p.size %></td>
-          <td><%= p.color %></td>
-          <td><%= p.price %></td>
-          <td><%= p.stock %></td>
-      <td>
-  <a href="/products/<%= p.id %>/edit">Ubah</a>
-  <% if (user.role === 'admin') { %>
-    <form method="POST" action="/products/<%= p.id %>/delete" style="display:inline"
-          onsubmit="return confirm('Hapus sepatu ini?')">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <button type="submit">Hapus</button>
-    </form>
-  <% } %>
-</td>
+          <th>Nama</th><th>Merek</th><th>Kategori</th><th>Ukuran</th><th>Warna</th>
+          <th class="angka">Harga</th><th class="angka">Stok</th><th>Status</th><th>Aksi</th>
         </tr>
-      <% }); %>
+      </thead>
+      <tbody>
+        <% products.forEach(function(p) { %>
+          <% const status = p.stock === 0 ? ['Habis', 'badge-habis'] : (p.stock <= 5 ? ['Menipis', 'badge-tipis'] : ['Tersedia', 'badge-ok']); %>
+          <tr>
+            <td><%= p.name %></td>
+            <td><%= p.brand %></td>
+            <td><%= p.category %></td>
+            <td><%= p.size %></td>
+            <td><%= p.color %></td>
+            <td class="angka">Rp <%= Number(p.price).toLocaleString('id-ID') %></td>
+            <td class="angka"><%= p.stock %></td>
+            <td><span class="badge <%= status[1] %>"><%= status[0] %></span></td>
+            <td>
+              <div class="aksi">
+                <a href="/products/<%= p.id %>/edit" class="btn btn-kecil btn-garis">Ubah</a>
+                <% if (user.role === 'admin') { %>
+                  <form method="POST" action="/products/<%= p.id %>/delete" data-konfirmasi="Hapus sepatu ini?">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="btn btn-kecil btn-bahaya">Hapus</button>
+                  </form>
+                <% } %>
+              </div>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
     </table>
   <% } %>
-</body>
-</html>
+</div>
+
+<%- include('../partials/end') %>
