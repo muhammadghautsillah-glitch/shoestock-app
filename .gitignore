@@ -6,3 +6,5 @@ npm-debug.log*
 logs/
 *.log
 .DS_Store
+# Skrip pengecekan sementara (tidak ikut repo)
+scripts/cek-*.js
