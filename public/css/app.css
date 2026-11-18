@@ -164,9 +164,11 @@ a:hover { text-decoration: underline; }
   .auth-form { padding: 1.5rem; }
 }
 /* ===== Logo ===== */
-.brand { display: flex; align-items: center; gap: 0.6rem; }
-.logo-gambar { width: 36px; height: 36px; flex-shrink: 0; }
+.brand { display: block; }
+.logo-gambar { width: 36px; height: 36px; display: inline-block; vertical-align: middle; margin-right: 0.6rem; }
 .auth-panel .logo-gambar { width: 48px; height: 48px; }
 /* ===== Daftar pesan error (registrasi) ===== */
 ul.pesan-error { list-style: none; padding: 0.7rem 1rem; }
 ul.pesan-error li + li { margin-top: 0.25rem; }
+/* Perbaikan: tulisan ShoeStock menyatu */
+.brand { display: block; }
