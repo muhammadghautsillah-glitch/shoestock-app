@@ -1,22 +1,14 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
+<%- include('partials/start', { active: 'dashboard' }) %>
+
+<div class="judul-halaman">
   <h1>Dashboard</h1>
-  <p>Halo, <strong><%= user.username %></strong></p>
-<ul>
-  <li><a href="/products">Data Sepatu</a></li>
-  <li><a href="/stock">Stok Masuk/Keluar</a></li>
-  <li><a href="/reports">Laporan</a></li>
-</ul>
-  <form method="POST" action="/logout">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button type="submit">Logout</button>
-  </form>
-</body>
-</html>
+  <p class="sub">Halo, <strong><%= user.username %></strong>. Pilih menu untuk mulai.</p>
+</div>
+
+<div class="menu-grid">
+  <a class="menu-kartu" href="/products">Data Sepatu<small>Tambah, ubah, dan hapus data sepatu</small></a>
+  <a class="menu-kartu" href="/stock">Stok Masuk/Keluar<small>Catat barang masuk dan keluar</small></a>
+  <a class="menu-kartu" href="/reports">Laporan<small>Ringkasan stok dan ekspor CSV</small></a>
+</div>
+
+<%- include('partials/end') %>

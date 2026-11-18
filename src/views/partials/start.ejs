@@ -1,0 +1,33 @@
+<% const aktif = (typeof active !== 'undefined') ? active : ''; %>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> - ShoeStock</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">Shoe<span>Stock</span></div>
+
+    <nav class="nav">
+      <a href="/dashboard" class="<%= aktif === 'dashboard' ? 'aktif' : '' %>">Dashboard</a>
+      <a href="/products" class="<%= aktif === 'products' ? 'aktif' : '' %>">Data Sepatu</a>
+      <a href="/stock" class="<%= aktif === 'stock' ? 'aktif' : '' %>">Stok Masuk/Keluar</a>
+      <a href="/reports" class="<%= aktif === 'reports' ? 'aktif' : '' %>">Laporan</a>
+    </nav>
+
+    <div class="sidebar-bawah">
+      <% if (typeof user !== 'undefined' && user) { %>
+        <div class="pengguna"><%= user.username %></div>
+      <% } %>
+      <form method="POST" action="/logout" class="form-logout">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit" class="btn-logout">Logout</button>
+      </form>
+    </div>
+  </aside>
+
+  <main class="konten">

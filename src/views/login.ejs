@@ -3,27 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/style.css">
+  <title><%= title %> - ShoeStock</title>
+  <link rel="stylesheet" href="/css/app.css">
 </head>
-<body>
-  <h1>Login</h1>
+<body class="auth-halaman">
+  <div class="auth-kartu">
+    <div class="auth-panel">
+      <img src="/img/logo-sepatu.svg" alt="Logo ShoeStock" class="logo-img">
+      <p>Kelola stok sepatu dengan mudah, rapi, dan aman.</p>
+    </div>
 
-  <% if (error) { %>
-    <p class="error"><%= error %></p>
-  <% } %>
+    <div class="auth-form">
+      <h1>Selamat Datang</h1>
+      <p class="sub">Masuk untuk mengelola data sepatu dan stok.</p>
 
-  <form method="POST" action="/login">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <label>Username</label><br>
-    <input type="text" name="username" required><br><br>
+      <% if (error) { %>
+        <p class="pesan-error"><%= error %></p>
+      <% } %>
 
-    <label>Password</label><br>
-    <input type="password" name="password" required><br><br>
+      <form method="POST" action="/login">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-    <button type="submit">Masuk</button>
-  </form>
+        <div class="field">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" autocomplete="username" required>
+        </div>
 
-  <p>Belum punya akun? <a href="/register">Daftar</a></p>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" autocomplete="current-password" required>
+        </div>
+
+        <button type="submit" class="btn-aksen">Masuk</button>
+      </form>
+
+      <p class="auth-pindah">Belum punya akun? <a href="/register">Daftar sekarang</a></p>
+    </div>
+  </div>
 </body>
 </html>
