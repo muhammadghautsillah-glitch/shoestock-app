@@ -1,49 +1,82 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-  <p><a href="/dashboard">&larr; Dashboard</a></p>
-  <h1>Laporan Stok</h1>
+<%- include('../partials/start', { active: 'reports' }) %>
 
-  <table border="1" cellpadding="8" cellspacing="0">
-    <tr>
-      <th>Jumlah jenis sepatu</th>
-      <th>Total stok</th>
-      <th>Stok menipis (&le; <%= batas %>)</th>
-    </tr>
-    <tr>
-      <td><%= ringkasan.jumlah_produk %></td>
-      <td><%= ringkasan.total_stok %></td>
-      <td><%= ringkasan.stok_menipis %></td>
-    </tr>
-  </table>
-<p><a href="/reports/export.csv">Unduh data sepatu (CSV)</a></p>
-  <h2>Riwayat Stok Terakhir</h2>
-  <% if (riwayat.length === 0) { %>
-    <p>Belum ada riwayat stok.</p>
+<div class="bar-atas">
+  <div class="judul-halaman">
+    <h1>Laporan Stok</h1>
+    <p class="sub">Ringkasan stok dan riwayat barang masuk/keluar.</p>
+  </div>
+  <a href="/reports/export.csv" class="btn">Unduh data sepatu (CSV)</a>
+</div>
+
+<div class="kartu-angka">
+  <div class="angka-kartu">
+    <span>Jenis sepatu</span>
+    <strong><%= ringkasan.jumlah_produk %></strong>
+  </div>
+  <div class="angka-kartu aksen">
+    <span>Total stok (pasang)</span>
+    <strong><%= ringkasan.total_stok %></strong>
+  </div>
+  <div class="angka-kartu peringatan">
+    <span>Stok menipis (1-<%= batas %>)</span>
+    <strong><%= ringkasan.stok_menipis %></strong>
+  </div>
+  <div class="angka-kartu bahaya">
+    <span>Stok habis</span>
+    <strong><%= ringkasan.stok_habis %></strong>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Stok per Sepatu</h2>
+  <% if (produk.length === 0) { %>
+    <p class="kosong">Belum ada data sepatu.</p>
   <% } else { %>
-    <table border="1" cellpadding="6" cellspacing="0">
-      <tr>
-        <th>Waktu</th><th>Sepatu</th><th>Ukuran</th><th>Jenis</th>
-        <th>Jumlah</th><th>Catatan</th><th>Oleh</th>
-      </tr>
-      <% riwayat.forEach(function(r) { %>
+    <% produk.forEach(function(p) { %>
+      <div class="grafik-baris">
+        <div class="grafik-label"><%= p.name %> (<%= p.size %>)</div>
+        <div class="grafik-jalur">
+          <div class="grafik-isi" style="width: <%= Math.round(p.stock / stokTertinggi * 100) %>%"></div>
+        </div>
+        <div class="grafik-nilai"><%= p.stock %></div>
+      </div>
+    <% }); %>
+  <% } %>
+</div>
+
+<h2>Riwayat Stok Terakhir</h2>
+<div class="tabel-bungkus">
+  <% if (riwayat.length === 0) { %>
+    <p class="kosong">Belum ada riwayat stok.</p>
+  <% } else { %>
+    <table class="tabel">
+      <thead>
         <tr>
-          <td><%= new Date(r.created_at).toLocaleString('id-ID') %></td>
-          <td><%= r.name %></td>
-          <td><%= r.size %></td>
-          <td><%= r.type === 'in' ? 'Masuk' : 'Keluar' %></td>
-          <td><%= r.quantity %></td>
-          <td><%= r.note || '-' %></td>
-          <td><%= r.username || '-' %></td>
+          <th>Waktu</th><th>Sepatu</th><th>Ukuran</th><th>Jenis</th>
+          <th class="angka">Jumlah</th><th>Catatan</th><th>Oleh</th>
         </tr>
-      <% }); %>
+      </thead>
+      <tbody>
+        <% riwayat.forEach(function(r) { %>
+          <tr>
+            <td><%= new Date(r.created_at).toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' }) %></td>
+            <td><%= r.name %></td>
+            <td><%= r.size %></td>
+            <td>
+              <% if (r.type === 'in') { %>
+                <span class="badge badge-ok">Masuk</span>
+              <% } else { %>
+                <span class="badge badge-habis">Keluar</span>
+              <% } %>
+            </td>
+            <td class="angka"><%= r.quantity %></td>
+            <td><%= r.note || '-' %></td>
+            <td><%= r.username || '-' %></td>
+          </tr>
+        <% }); %>
+      </tbody>
     </table>
   <% } %>
-</body>
-</html>
+</div>
+
+<%- include('../partials/end') %>

@@ -7,9 +7,14 @@ exports.dashboard = async (req, res) => {
     const ringkasan = await pool.query(
       `SELECT COUNT(*)::int AS jumlah_produk,
               COALESCE(SUM(stock), 0)::int AS total_stok,
-              COUNT(*) FILTER (WHERE stock <= $1)::int AS stok_menipis
+              COUNT(*) FILTER (WHERE stock > 0 AND stock <= $1)::int AS stok_menipis,
+              COUNT(*) FILTER (WHERE stock = 0)::int AS stok_habis
        FROM products`,
       [BATAS_MENIPIS]
+    );
+
+    const produk = await pool.query(
+      'SELECT name, size, stock FROM products ORDER BY stock DESC, name LIMIT 8'
     );
 
     const riwayat = await pool.query(
@@ -21,10 +26,14 @@ exports.dashboard = async (req, res) => {
        LIMIT 10`
     );
 
+    const stokTertinggi = produk.rows.length > 0 ? Math.max(...produk.rows.map((p) => p.stock), 1) : 1;
+
     res.render('reports/index', {
       title: 'Laporan',
       user: req.session.user,
       ringkasan: ringkasan.rows[0],
+      produk: produk.rows,
+      stokTertinggi,
       riwayat: riwayat.rows,
       batas: BATAS_MENIPIS,
     });
@@ -33,6 +42,7 @@ exports.dashboard = async (req, res) => {
     res.status(500).send('Terjadi kesalahan pada server.');
   }
 };
+
 function amankanCsv(nilai) {
   let teks = String(nilai ?? '');
   // Cegah CSV/formula injection di Excel

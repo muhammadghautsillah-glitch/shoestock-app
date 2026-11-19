@@ -251,3 +251,20 @@ ul.pesan-error li + li { margin-top: 0.25rem; }
   padding: 0.7rem 1rem;
   margin: 0 0 1rem;
 }
+/* ===== Laporan: kartu angka, grafik ===== */
+.kartu-angka { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.angka-kartu { background: var(--kartu); border: 1px solid var(--garis); border-radius: 12px; padding: 1.1rem 1.25rem; }
+.angka-kartu span { display: block; color: var(--abu); font-size: 0.85rem; }
+.angka-kartu strong { display: block; font-size: 1.9rem; line-height: 1.2; margin-top: 0.2rem; }
+.angka-kartu.aksen strong { color: var(--aksen-gelap); }
+.angka-kartu.peringatan strong { color: #b45309; }
+.angka-kartu.bahaya strong { color: #b91c1c; }
+
+.panel { background: var(--kartu); border: 1px solid var(--garis); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; }
+.panel h2 { margin: 0 0 1rem; font-size: 1.1rem; }
+
+.grafik-baris { display: grid; grid-template-columns: minmax(110px, 220px) 1fr 50px; align-items: center; gap: 0.75rem; margin-bottom: 0.6rem; }
+.grafik-label { font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.grafik-jalur { background: #f1f1f2; border-radius: 999px; height: 14px; overflow: hidden; }
+.grafik-isi { height: 100%; background: var(--aksen); border-radius: 999px; }
+.grafik-nilai { text-align: right; font-weight: 600; font-size: 0.9rem; }
