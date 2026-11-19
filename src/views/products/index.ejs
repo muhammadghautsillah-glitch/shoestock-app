@@ -8,11 +8,12 @@
   <a href="/products/new" class="btn">+ Tambah Sepatu</a>
 </div>
 
+<input type="search" id="cari" class="cari" placeholder="Cari nama, merek, atau kategori...">
 <div class="tabel-bungkus">
   <% if (products.length === 0) { %>
     <p class="kosong">Belum ada data sepatu.</p>
   <% } else { %>
-    <table class="tabel">
+    <table class="tabel"data-cari>
       <thead>
         <tr>
           <th>Nama</th><th>Merek</th><th>Kategori</th><th>Ukuran</th><th>Warna</th>
