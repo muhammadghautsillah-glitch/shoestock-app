@@ -268,3 +268,11 @@ ul.pesan-error li + li { margin-top: 0.25rem; }
 .grafik-jalur { background: #f1f1f2; border-radius: 999px; height: 14px; overflow: hidden; }
 .grafik-isi { height: 100%; background: var(--aksen); border-radius: 999px; }
 .grafik-nilai { text-align: right; font-weight: 600; font-size: 0.9rem; }
+/* ===== Form lebar (tambah/ubah sepatu) ===== */
+.kartu-form.lebar { max-width: 680px; }
+.grid-dua { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+.aksi-form { display: flex; gap: 0.75rem; align-items: center; margin-top: 0.5rem; }
+.aksi-form .btn-aksen { width: auto; padding: 0.75rem 1.6rem; }
+@media (max-width: 600px) {
+  .grid-dua { grid-template-columns: 1fr; }
+}
