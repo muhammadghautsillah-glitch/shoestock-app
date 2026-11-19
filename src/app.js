@@ -91,6 +91,12 @@ app.use((req, res, next) => {
   next();
 });
 
+// Sediakan data user ke semua tampilan (untuk sidebar)
+app.use((req, res, next) => {
+  res.locals.user = req.session.user;
+  next();
+});
+
 // Routes aplikasi.
 app.use('/', require('./routes/authRoutes'));
 app.use('/', require('./routes/productRoutes'));

@@ -1,49 +1,55 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-  <p><a href="/dashboard">&larr; Dashboard</a></p>
-  <h1>Stok Masuk/Keluar</h1>
+<%- include('../partials/start', { active: 'stock' }) %>
 
+<div class="judul-halaman">
+  <h1>Stok Masuk/Keluar</h1>
+  <p class="sub">Catat barang masuk atau keluar. Stok sepatu berubah otomatis.</p>
+</div>
+
+<div class="kartu-form">
   <% if (success) { %>
-    <p style="color:green">Stok berhasil diperbarui.</p>
+    <p class="pesan-sukses">Stok berhasil diperbarui.</p>
   <% } %>
 
   <% if (errors.length > 0) { %>
-    <ul class="error">
+    <ul class="pesan-error">
       <% errors.forEach(function(e) { %><li><%= e %></li><% }); %>
     </ul>
   <% } %>
 
   <form method="POST" action="/stock">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <label>Sepatu</label><br>
-    <select name="product_id" required>
-      <% products.forEach(function(p) { %>
-        <option value="<%= p.id %>">
-          <%= p.name %> - ukuran <%= p.size %> - <%= p.color %> (stok: <%= p.stock %>)
-        </option>
-      <% }); %>
-    </select><br><br>
 
-    <label>Jenis</label><br>
-    <select name="type" required>
-      <option value="in">Barang masuk</option>
-      <option value="out">Barang keluar</option>
-    </select><br><br>
+    <div class="field">
+      <label for="product_id">Sepatu</label>
+      <select id="product_id" name="product_id" required>
+        <% products.forEach(function(p) { %>
+          <option value="<%= p.id %>">
+            <%= p.name %> - ukuran <%= p.size %> - <%= p.color %> (stok: <%= p.stock %>)
+          </option>
+        <% }); %>
+      </select>
+    </div>
 
-    <label>Jumlah</label><br>
-    <input type="number" name="quantity" min="1" required><br><br>
+    <div class="field">
+      <label for="type">Jenis</label>
+      <select id="type" name="type" required>
+        <option value="in">Barang masuk</option>
+        <option value="out">Barang keluar</option>
+      </select>
+    </div>
 
-    <label>Catatan (opsional)</label><br>
-    <input type="text" name="note" maxlength="255"><br><br>
+    <div class="field">
+      <label for="quantity">Jumlah</label>
+      <input type="number" id="quantity" name="quantity" min="1" required>
+    </div>
 
-    <button type="submit">Simpan</button>
+    <div class="field">
+      <label for="note">Catatan (opsional)</label>
+      <input type="text" id="note" name="note" maxlength="255">
+    </div>
+
+    <button type="submit" class="btn-aksen">Simpan</button>
   </form>
-</body>
-</html>
+</div>
+
+<%- include('../partials/end') %>
