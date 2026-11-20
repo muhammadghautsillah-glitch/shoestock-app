@@ -17,6 +17,9 @@
       <a href="/products" class="<%= aktif === 'products' ? 'aktif' : '' %>">Data Sepatu</a>
       <a href="/stock" class="<%= aktif === 'stock' ? 'aktif' : '' %>">Stok Masuk/Keluar</a>
       <a href="/reports" class="<%= aktif === 'reports' ? 'aktif' : '' %>">Laporan</a>
+      <% if (typeof user !== 'undefined' && user && user.role === 'admin') { %>
+  <a href="/logs" class="<%= aktif === 'logs' ? 'aktif' : '' %>">Log Aktivitas</a>
+<% } %>
     </nav>
 
     <div class="sidebar-bawah">

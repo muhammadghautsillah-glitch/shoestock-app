@@ -1,0 +1,38 @@
+<%- include('../partials/start', { active: 'logs' }) %>
+
+<div class="judul-halaman">
+  <h1>Log Aktivitas</h1>
+  <p class="sub">100 aktivitas terakhir. Halaman ini hanya bisa dibuka oleh admin.</p>
+</div>
+
+<div class="tabel-bungkus">
+  <% if (logs.length === 0) { %>
+    <p class="kosong">Belum ada aktivitas tercatat.</p>
+  <% } else { %>
+    <table class="tabel">
+      <thead>
+        <tr>
+          <th>Waktu</th><th>User</th><th>Aksi</th><th>Detail</th><th>IP</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% logs.forEach(function(l) { %>
+          <%
+            const kelas = (l.action === 'LOGIN_GAGAL' || l.action === 'PRODUK_HAPUS')
+              ? 'badge-habis'
+              : ((l.action.indexOf('PRODUK') === 0 || l.action.indexOf('STOK') === 0) ? 'badge-tipis' : 'badge-ok');
+          %>
+          <tr>
+            <td><%= new Date(l.created_at).toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' }) %></td>
+            <td><%= l.username || '-' %></td>
+            <td><span class="badge <%= kelas %>"><%= l.action %></span></td>
+            <td><%= l.detail || '-' %></td>
+            <td><%= l.ip_address || '-' %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
+
+<%- include('../partials/end') %>

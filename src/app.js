@@ -102,7 +102,7 @@ app.use('/', require('./routes/authRoutes'));
 app.use('/', require('./routes/productRoutes'));
 app.use('/', require('./routes/stockRoutes'));
 app.use('/', require('./routes/reportRoutes'));
-
+app.use('/', require('./routes/logRoutes'));
 // Dashboard.
 app.get('/dashboard', requireLogin, (req, res) => {
   res.render('dashboard', {
