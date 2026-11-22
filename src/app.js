@@ -37,6 +37,14 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Security headers.
 app.use(helmet());
+// Permissions-Policy: matikan fitur browser yang tidak dipakai aplikasi.
+app.use((req, res, next) => {
+  res.setHeader(
+    'Permissions-Policy',
+    'camera=(), microphone=(), geolocation=(), payment=()'
+  );
+  next();
+});
 
 // Membaca data formulir.
 app.use(express.urlencoded({ extended: false }));
