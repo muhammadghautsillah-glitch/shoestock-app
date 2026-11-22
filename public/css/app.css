@@ -276,3 +276,10 @@ ul.pesan-error li + li { margin-top: 0.25rem; }
 @media (max-width: 600px) {
   .grid-dua { grid-template-columns: 1fr; }
 }
+/* Perkecil logo di panel login */
+.logo-img {
+  width: 72px;
+  height: 72px;
+  display: block;
+  margin-bottom: 1rem;
+}
