@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 
 const express = require('express');
@@ -119,10 +118,10 @@ app.get('/dashboard', requireLogin, (req, res) => {
   });
 });
 
-// Halaman utama.
+// Halaman utama ShoeStock.
 app.get('/', (req, res) => {
   res.render('index', {
-    title: 'ShoeStock'
+    title: 'ShoeStock - Manajemen Stok Sepatu'
   });
 });
 

@@ -46,8 +46,10 @@ exports.showLogin = (req, res) => {
   res.render('login', { title: 'Login', error: null });
 };
 
+
 exports.login = async (req, res) => {
-  const { username, password } = req.body;
+  const username = String(req.body.username || '').trim();
+  const password = String(req.body.password || '');
   const pesanGagal = 'Username atau password salah.';
 
   try {

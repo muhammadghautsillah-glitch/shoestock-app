@@ -3,11 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/style.css">
+  <title>*<%= title %></title>
+  <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
-  <h1><%= title %></h1>
-  <p>Aplikasi manajemen stok sepatu.</p>
+  <main class="landing">
+    <div class="landing-kartu">
+      <img src="/img/logo.svg" alt="" class="landing-logo">
+      <h1>Shoe<span>Stock</span></h1>
+      <p>Kelola stok sepatu dengan mudah, rapi, dan aman.</p>
+      <div class="landing-aksi">
+        <a href="/login" class="tombol tombol-utama">Masuk</a>
+        <a href="/register" class="tombol tombol-garis">Daftar</a>
+      </div>
+    </div>
+  </main>
 </body>
 </html>
