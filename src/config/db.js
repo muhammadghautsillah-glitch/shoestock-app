@@ -13,3 +13,7 @@ const pool = new Pool({
 });
 
 module.exports = pool;
+// Koneksi idle yang diputus database (mis. Neon tidur) tidak boleh mematikan server.
+pool.on('error', (err) => {
+  console.error('Koneksi database idle error:', err.message);
+});
